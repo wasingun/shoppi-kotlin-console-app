@@ -16,9 +16,9 @@ class ShoppingCategory {
         if (selectedCategory == "#") {
             // 장바구니
         } else {
-            // 카테고리 상품 목록 보여주기
             if (categories.contains(selectedCategory)){
-                //카테고리 이동
+               val shoppingProductList = ShoppingProductList()
+                shoppingProductList.showProducts(selectedCategory)
             }else {
                 showErrorMessage(selectedCategory)
             }
