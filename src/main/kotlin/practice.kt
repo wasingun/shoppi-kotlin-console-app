@@ -1,20 +1,84 @@
 fun main(args: Array<String>) {
-    val jeongbin = Student("정빈", 30, "철학")
-    val wasingun = Student("와신군", 35, "무역")
-    val wooseob = Student("이우섭", 30, "무역")
-
-}
-
-
-open class Person(private val name: String, private val age: Int){
-    var IQ = 100
-    fun greeting(){
-        println("안녕하세요. $name 입니다. 나이는 $age 입니다.")
+    println("숫자야구에 오신것을 환영합니다.")
+    val result = generateThreeNums().toList()
+    println("${result}")
+    println("숫자 야구 게임에 필요한 숫자 3개를 입력하시면 됩니다.")
+    var userInputNum = getNums()
+    println("1회차 시도 $userInputNum 을 입력하셨습니다")
+    var s = compareS(result, userInputNum)
+    var b = compareB(result, userInputNum)
+    if (s !== 3) {
+        for (i in 2..4) {
+            if (s == 0 && b == 0) {
+                println("아웃입니다")
+                println("$i 회차 숫자를 입력해주세요")
+                userInputNum = getNums()
+                compareS(result, userInputNum)
+                compareB(result, userInputNum)
+            }else {
+                println("$s 스트라이크 $b 볼")
+                println("$i 회차 숫자를 입력해주세요")
+                getNums()
+                compareS(result, userInputNum)
+                compareB(result, userInputNum)
+            }
+        }
+        println("패배하였습니다. 게임을 종료합니다.")
+    }
+    else {
+        println("승리하셨습니다. 게임을 종료합니다.")
     }
 }
-class Student(private val name: String, private val age: Int, private val major: String): Person(name, age){
-    fun introduceMajor(){
-        println("제 전공은 $major 이며, IQ는 $IQ 입니다 ")
-    }
 
+private fun compareS(result: List<Int>, userInputNum: List<Int>): Int {
+    var s = 0
+    for (i in 0..2) {
+        if (result[i] == userInputNum[i]) {
+            s = s + 1
+        }
+    }
+    return s
 }
+
+private fun compareB(result: List<Int>, userInputNum: List<Int>): Int {
+    var b = 0
+    for (i in 0..2) {
+        if (result.contains(userInputNum[i]) && result[i] !== userInputNum[i]) {
+            b = b + 1
+        }
+    }
+    return b
+}
+
+fun generateThreeNums(): Set<Int> {
+    var answer = mutableSetOf<Int>()
+    val numList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9)
+    while (answer.size < 3) {
+        answer.add(numList.random())
+    }
+    return answer
+}
+
+fun getNums(): List<Int> {
+    val numList = mutableListOf<Int>()
+    for (i in 1..3) {
+        println("$i 번째 숫자를 입력해주세요")
+        var num = inputNumber()
+        while (numList.contains(num)) {
+            println("중복된 숫자입니다. 다시 입력해주세요")
+            num = inputNumber()
+        }
+        numList.add(num)
+    }
+    return numList
+}
+
+private fun inputNumber(): Int {
+    var result = readLine()
+    while (result.isNullOrBlank() || !(result[0].isDigit()) || result.length >= 2) {
+        println("문자, 빈칸, 중복숫자 금지!(넣으면 병준)")
+        result = readLine()
+    }
+    return result.toInt()
+}
+
