@@ -20,6 +20,7 @@ fun main(args: Array<String>) {
     }
 }
 
+
 fun reGameStart(newResult: List<Int>) {
     val newResult = generateThreeNums().toList()
 

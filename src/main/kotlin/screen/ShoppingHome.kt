@@ -3,7 +3,7 @@ package screen
 class ShoppingHome {
     fun start() {
         showWelcomeMessage()
-        showCategories()
+        showCategories2()
     }
 
     private fun showWelcomeMessage() {
@@ -18,7 +18,7 @@ class ShoppingHome {
         """.trimIndent()
         )
     }
-    private fun showCategories() {
+    private fun showCategories2() {
         val shoppingCategory = ShoppingCategory()
         shoppingCategory.showCategories()
     }
