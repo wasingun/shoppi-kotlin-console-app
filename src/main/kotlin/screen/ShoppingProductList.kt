@@ -4,8 +4,8 @@ import data.Product
 
 class ShoppingProductList {
     private val products = arrayOf(
-        Product("패션", "겨울 패딩"),
-        Product("패션",  "겨울 바지"),
+        //Product("패션", "겨울 패딩"),
+        //Product("패션",  "겨울 바지"),
         Product("전자기기", "핸드폰"),
         Product("전자기기", "블루투스 이어폰"),
         Product("전자기기", "노트북"),
