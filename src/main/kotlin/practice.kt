@@ -3,56 +3,95 @@ fun main(args: Array<String>) {
     val result = generateThreeNums().toList()
     println("${result}")
     println("숫자 야구 게임에 필요한 숫자 3개를 입력하시면 됩니다.")
-    var userInputNum = getNums()
-    println("1회차 시도 $userInputNum 을 입력하셨습니다")
-    var s = compareS(result, userInputNum)
-    var b = compareB(result, userInputNum)
-    if (s !== 3) {
-        for (i in 2..4) {
-            if (s == 0 && b == 0) {
-                println("아웃입니다")
-                println("$i 회차 숫자를 입력해주세요")
-                userInputNum = getNums()
-                compareS(result, userInputNum)
-                compareB(result, userInputNum)
-            }else {
-                println("$s 스트라이크 $b 볼")
-                println("$i 회차 숫자를 입력해주세요")
-                getNums()
-                compareS(result, userInputNum)
-                compareB(result, userInputNum)
-            }
+    playGame(result)
+    println("게임을 다시 시작하시겠습니까? [Y / N]")
+
+    while (true) {
+        val inputChar = readLine()
+        if (inputChar == "Y") {
+            reGameStart(result)
+            break
+        } else if (inputChar == "N"){
+            println ("게임을 종료합니다.")
+            break
+        } else {
+            println ("값을 정확히 입력해주세요")
         }
-        println("패배하였습니다. 게임을 종료합니다.")
-    }
-    else {
-        println("승리하셨습니다. 게임을 종료합니다.")
     }
 }
 
-private fun compareS(result: List<Int>, userInputNum: List<Int>): Int {
-    var s = 0
+fun reGameStart(newResult: List<Int>) {
+    val newResult = generateThreeNums().toList()
+
+    println("${newResult}")
+
+    println("숫자 야구 게임에 필요한 숫자 3개를 입력하시면 됩니다.")
+    playGame(newResult)
+    println("게임을 다시 시작하시겠습니까? [Y / N]")
+    while (true) {
+        val choice = readLine()
+        if (choice == "Y") {
+            reGameStart(newResult)
+            break
+        } else if (choice == "N") {
+            println("게임을 종료합니다.")
+            break
+        } else {
+            println(" Y 또는 N을 입력해주세요.")
+        }
+    }
+}
+
+private fun playGame(result: List<Int>) {
+    var isWin = false
+    for (i in 1..9) {
+        val userInputNum = getNums()
+        println("$i 회차 시도 $userInputNum 을 입력하셨습니다")
+
+        val strike = countStrike(result, userInputNum)
+        val ball = countBall(result, userInputNum)
+
+        if (strike == 0 && ball == 0) {
+            println("아웃입니다")
+        } else if (strike == 3) {
+            isWin = true
+            break
+        } else {
+            println("$strike 스트라이크 $ball 볼")
+        }
+    }
+
+    if (isWin) {
+        println("승리하셨습니다.")
+    } else {
+        println("패배하였습니다. 정답은 $result 입니다")
+    }
+}
+
+
+private fun countStrike(result: List<Int>, userInputNum: List<Int>): Int {
+    var strike = 0
     for (i in 0..2) {
         if (result[i] == userInputNum[i]) {
-            s = s + 1
+            strike = strike + 1
         }
     }
-    return s
+    return strike
 }
 
-private fun compareB(result: List<Int>, userInputNum: List<Int>): Int {
-    var b = 0
+private fun countBall(result: List<Int>, userInputNum: List<Int>): Int {
+    var ball = 0
     for (i in 0..2) {
         if (result.contains(userInputNum[i]) && result[i] !== userInputNum[i]) {
-            b = b + 1
+            ball = ball + 1
         }
     }
-    return b
+    return ball
 }
 
 fun generateThreeNums(): Set<Int> {
     var answer = mutableSetOf<Int>()
-    val numList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9)
+    val numList = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     while (answer.size < 3) {
         answer.add(numList.random())
     }
@@ -81,4 +120,3 @@ private fun inputNumber(): Int {
     }
     return result.toInt()
 }
-
