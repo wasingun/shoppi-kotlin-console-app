@@ -1,39 +1,53 @@
 fun main(args: Array<String>) {
     println("숫자야구에 오신것을 환영합니다.")
-    val result = generateThreeNums().toList()
-    println("${result}")
+  //  var result = generateThreeNums().toList()
+  //  println("${result}")
     println("숫자 야구 게임에 필요한 숫자 3개를 입력하시면 됩니다.")
-    playGame(result)
-    println("게임을 다시 시작하시겠습니까? [Y / N]")
-    ChoiceYorN(result)
-}
-
-private fun ChoiceYorN(result: List<Int>) {
-    while (true) {
-        val inputChar = readLine()
-        if (inputChar == "Y") {
+    var regame = true
+    while(true) {
+        playGame()
+        println("게임을 다시 시작하시겠습니까? [Y / N]")
+        while (regame) {
+            val inputChar = readLine()
+            if (inputChar == "Y") {
+                regame = true
+                break
+            } else if (inputChar == "N") {
+                println("게임을 종료합니다.")
+                regame = false
+                break
+            } else {
+                println("값을 정확히 입력해주세요")
+            }
+        }
+        if (!regame){
             break
-        } else if (inputChar == "N") {
-            println("게임을 종료합니다.")
-        } else {
-            println("값을 정확히 입력해주세요")
         }
     }
 }
 
+//fun ChoiceYorN(result: List<Int>) {
+//    var regame = true
+//    while (true) {
+//        val inputChar = readLine()
+//        if (inputChar == "Y") {
+//            regame = true
+//            break
+//        } else if (inputChar == "N") {
+//            println("게임을 종료합니다.")
+//            regame = false
+//        } else {
+//            println("값을 정확히 입력해주세요")
+//        }
+//    }
+//}
 
-fun reGameStart(newResult: List<Int>) {
-    val newResult = generateThreeNums().toList()
 
-    println("${newResult}")
+fun playGame() {
 
+    var result = generateThreeNums().toList()
+    println("${result}")
     println("숫자 야구 게임에 필요한 숫자 3개를 입력하시면 됩니다.")
-    playGame(newResult)
-    println("게임을 다시 시작하시겠습니까? [Y / N]")
-    ChoiceYorN(newResult)
-}
-
-private fun playGame(result: List<Int>) {
     var isWin = false
     for (i in 1..9) {
         val userInputNum = getNums()
@@ -60,7 +74,7 @@ private fun playGame(result: List<Int>) {
 }
 
 
-private fun countStrike(result: List<Int>, userInputNum: List<Int>): Int {
+fun countStrike(result: List<Int>, userInputNum: List<Int>): Int {
     var strike = 0
     for (i in 0..2) {
         if (result[i] == userInputNum[i]) {
@@ -70,7 +84,7 @@ private fun countStrike(result: List<Int>, userInputNum: List<Int>): Int {
     return strike
 }
 
-private fun countBall(result: List<Int>, userInputNum: List<Int>): Int {
+fun countBall(result: List<Int>, userInputNum: List<Int>): Int {
     var ball = 0
     for (i in 0..2) {
         if (result.contains(userInputNum[i]) && result[i] !== userInputNum[i]) {
