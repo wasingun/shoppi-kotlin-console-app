@@ -5,17 +5,18 @@ fun main(args: Array<String>) {
     println("숫자 야구 게임에 필요한 숫자 3개를 입력하시면 됩니다.")
     playGame(result)
     println("게임을 다시 시작하시겠습니까? [Y / N]")
+    ChoiceYorN(result)
+}
 
+private fun ChoiceYorN(result: List<Int>) {
     while (true) {
         val inputChar = readLine()
         if (inputChar == "Y") {
-            reGameStart(result)
             break
-        } else if (inputChar == "N"){
-            println ("게임을 종료합니다.")
-            break
+        } else if (inputChar == "N") {
+            println("게임을 종료합니다.")
         } else {
-            println ("값을 정확히 입력해주세요")
+            println("값을 정확히 입력해주세요")
         }
     }
 }
@@ -29,18 +30,7 @@ fun reGameStart(newResult: List<Int>) {
     println("숫자 야구 게임에 필요한 숫자 3개를 입력하시면 됩니다.")
     playGame(newResult)
     println("게임을 다시 시작하시겠습니까? [Y / N]")
-    while (true) {
-        val choice = readLine()
-        if (choice == "Y") {
-            reGameStart(newResult)
-            break
-        } else if (choice == "N") {
-            println("게임을 종료합니다.")
-            break
-        } else {
-            println(" Y 또는 N을 입력해주세요.")
-        }
-    }
+    ChoiceYorN(newResult)
 }
 
 private fun playGame(result: List<Int>) {
