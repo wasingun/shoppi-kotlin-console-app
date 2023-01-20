@@ -4,44 +4,20 @@ fun main(args: Array<String>) {
   //  println("${result}")
     println("숫자 야구 게임에 필요한 숫자 3개를 입력하시면 됩니다.")
     var regame = true
-    while(true) {
+    while(regame) {
         playGame()
         println("게임을 다시 시작하시겠습니까? [Y / N]")
-        while (regame) {
-            val inputChar = readLine()
-            if (inputChar == "Y") {
-                regame = true
-                break
-            } else if (inputChar == "N") {
-                println("게임을 종료합니다.")
-                regame = false
-                break
-            } else {
-                println("값을 정확히 입력해주세요")
-            }
-        }
-        if (!regame){
-            break
-        }
+        regame = shouldReplay()
     }
 }
-
-//fun ChoiceYorN(result: List<Int>) {
-//    var regame = true
-//    while (true) {
-//        val inputChar = readLine()
-//        if (inputChar == "Y") {
-//            regame = true
-//            break
-//        } else if (inputChar == "N") {
-//            println("게임을 종료합니다.")
-//            regame = false
-//        } else {
-//            println("값을 정확히 입력해주세요")
-//        }
-//    }
-//}
-
+fun shouldReplay() :Boolean {
+    var inputChar = readLine()
+    while (inputChar.isNullOrBlank() || (inputChar != "Y" && inputChar != "N")) {
+        println("값을 정확히 입력해주세요")
+        inputChar = readLine()
+    }
+    return inputChar != "N"
+}
 
 fun playGame() {
 
